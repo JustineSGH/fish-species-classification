@@ -12,6 +12,7 @@ import sys
 import os
 import csv
 import sys
+import json
 # Disable tensorflow compilation warnings
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 
@@ -57,9 +58,12 @@ def classify_image(image_path, headers):
                     human_string = human_string.replace(" ","_")
                 
                     score = predictions[0][node_id]*100
-                    print('%s (score = %.5f%%)' % (human_string, score))
+		    data = { human_string : score }
+		    data_json = json.dumps(data)
+		    print(data_json)
+                    #print('%s (score = %.5f%%)' % (human_string, score))
 		    sys.stdout.flush()
-                    print('--------------------------------------')
+                    #print('--------------------------------------')
                     row_dict[human_string] = score
                 records.append(row_dict.copy())
                 writer.writerows(records)
