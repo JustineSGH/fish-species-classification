@@ -51,6 +51,7 @@ def classify_image(image_path, headers):
                 row_dict = {}
                 head, tail = os.path.split(file)
                 row_dict['id'] = tail.split('.')[0]
+		output = []
 
                 for node_id in top_k:
                     human_string = label_lines[node_id]
@@ -59,14 +60,14 @@ def classify_image(image_path, headers):
                 
                     score = predictions[0][node_id]*100
 		    data = { human_string : score }
-		    data_json = json.dumps(data)
-		    print(data_json)
-                    #print('%s (score = %.5f%%)' % (human_string, score))
-		    sys.stdout.flush()
-                    #print('--------------------------------------')
+		    output.append(data)
+		    #print('%s (score = %.5f%%)' % (human_string, score))
+		    #print('--------------------------------------')
                     row_dict[human_string] = score
                 records.append(row_dict.copy())
-                writer.writerows(records)
+		data_json = json.dumps(output)
+		print(data_json)
+		writer.writerows(records)
     f.close()    
 
 def main():
