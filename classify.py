@@ -59,7 +59,7 @@ def classify_image(image_path, headers):
                     human_string = human_string.replace(" ","_")
                 
                     score = predictions[0][node_id]*100
-		    data = { human_string : score }
+		    data = { "fish_name" : human_string, "percentage" : score }
 		    output.append(data)
 		    #print('%s (score = %.5f%%)' % (human_string, score))
 		    #print('--------------------------------------')
